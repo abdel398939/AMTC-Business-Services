@@ -1,821 +1,511 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="data:image/svg+xml,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-<text x='50%' y='70%' text-anchor='middle' font-size='95' fill='blue'>A</text>
-</svg>">
-<title>AMTC Business Services</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='70%' text-anchor='middle' font-size='95' fill='%230dcaf0'>A</text></svg>">
+    <title>AMTC Business Services | Premium Excellence</title>
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #0dcaf0;
+            --dark-bg: #040d1a;
+            --secondary-bg: #081c37;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-main: #e0e6ed;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
 
-<style>
-/* ======================
-   DESIGN SYSTEM CORE
-====================== */
-:root{
-  --primary:#0b1f3a;
-  --accent:#0dcaf0;
-  --bg:#f4f7fb;
-}
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            margin: 0;
+        }
 
-body{
-  background:var(--bg);
-  overflow-x:hidden;
-}
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
 
-/* ======================
-   SECTION SYSTEM
-====================== */
-.section{
-  padding:100px 20px;
-}
+        /* Custom Navbar */
+        .navbar {
+            background: rgba(4, 13, 26, 0.95) !important;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(13, 202, 240, 0.2);
+            padding: 15px 0;
+            z-index: 1000;
+        }
 
-.section-title{
-  text-align:center;
-  font-weight:800;
-  color:var(--primary);
-  margin-bottom:50px;
-}
+        .navbar-brand { font-weight: 800; letter-spacing: -0.5px; }
+        .nav-link {
+            font-weight: 600;
+            color: #fff !important;
+            margin: 0 15px;
+            transition: 0.3s;
+            opacity: 0.8;
+        }
+        .nav-link:hover { color: var(--primary) !important; opacity: 1; }
 
-/* ======================
-   BUTTON SYSTEM
-====================== */
-.btn-amtc{
-  background:var(--accent);
-  border:none;
-  color:black;
-  font-weight:600;
-  padding:10px 18px;
-  border-radius:10px;
-  transition:0.3s;
-}
+        /* Hero Slider Refined */
+        .hero-slider {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease;
+            transform: scale(1.15);
+        }
+        .hero-slide.active { opacity: 1; transform: scale(1); }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20%, rgba(4, 13, 26, 0.8) 0%, rgba(4, 13, 26, 0.4) 100%);
+        }
 
-.btn-amtc:hover{
-  transform:translateY(-3px);
-  background:#09b3d1;
-}
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            z-index: 10;
+            max-width: 800px;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* ======================
-   ICON SYSTEM
-====================== */
-.icon{
-  font-size:28px;
-  margin-bottom:10px;
-}
+        /* Glass Cards for Services */
+        .section { padding: 120px 0; }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+        }
 
-/* ======================
-   CARD VARIANTS
-====================== */
+        .card-premium {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-premium:hover {
+            background: rgba(13, 202, 240, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-10px);
+        }
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            background: rgba(13, 202, 240, 0.1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
 
-/* LIGHT */
-.card-light{
-  background:white;
-  border-radius:16px;
-  padding:25px;
-  border:1px solid #e9ecef;
-  transition:0.3s;
-  height:100%;
-}
-.card-light:hover{
-  transform:translateY(-8px);
-  box-shadow:0 15px 35px rgba(0,0,0,0.1);
-}
+        /* Project Gallery */
+        .project-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .project-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(4, 13, 26, 0.9), transparent);
+            opacity: 0;
+            transition: 0.4s;
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+        }
+        .project-wrapper:hover .project-overlay { opacity: 1; }
+        .project-wrapper:hover img { transform: scale(1.1); }
 
-/* GLASS */
-.card-glass{
-  background:rgba(255,255,255,0.2);
-  backdrop-filter:blur(12px);
-  border-radius:16px;
-  padding:25px;
-  border:1px solid rgba(255,255,255,0.3);
-  transition:0.3s;
-}
+        /* Video Section */
+        .video-container {
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            background: #000;
+        }
+        video { width: 100%; display: block; filter: brightness(0.8); }
 
-/* DARK */
-.card-dark{
-  background:var(--primary);
-  color:white;
-  border-radius:16px;
-  padding:25px;
-}
+        /* Footer */
+        footer {
+            background: #020811;
+            padding: 100px 0 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
 
-/* ======================
-   HERO
-====================== */
-.hero{
-  height:100vh;
-  background:linear-gradient(rgba(0,0,40,0.75), rgba(0,0,40,0.75)),
-  url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d') center/cover;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
+        .btn-main {
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border: none;
+            background: var(--primary);
+            color: #000;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(13, 202, 240, 0.4);
+            color: #000;
+        }
 
-/* ======================
-   PROJECT IMAGE CARDS
-====================== */
-.project-img{
-  border-radius:16px;
-  overflow:hidden;
-  transition:0.3s;
-}
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary-bg); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-.project-img{
-  height: 260px;          /* نفس الارتفاع لكل الصور */
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.project-img img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;      /* يملأ الصندوق بدون تمدد */
-  transition: 0.4s ease;
-}
-
-.project-img:hover img{
-  transform: scale(1.08);
-}
-
-
-/*===========
-video
-*/
-.video-box{
-  height: 320px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.video-box video{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Mobile */
-@media (max-width:768px){
-  .video-box{
-    height: 220px;
-  }
-}
-/* ======================
-   FOOTER
-====================== */
-footer{
-  background:#081c37;
-  color:white;
-  padding:60px 20px;
-}
-.nav-link{
-  color: #4ddefb;
-
-}
-
-.hero-slider{
-  position:relative;
-  height:100vh;
-  overflow:hidden;
-}
-
-.hero-slide{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  visibility:hidden;
-  transition:1s ease;
-  transform:scale(1.08);
-}
-
-.hero-slide.active{
-  opacity:1;
-  visibility:visible;
-  transform:scale(1);
-}
-
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    to right,
-    rgba(0,0,0,0.72),
-    rgba(0,0,0,0.35)
-  );
-}
-
-.hero-content{
-  position:absolute;
-  top:50%;
-  left:8%;
-  transform:translateY(-50%);
-  color:#fff;
-  z-index:5;
-  max-width:650px;
-}
-
-.hero-counter{
-  letter-spacing:3px;
-  font-size:14px;
-  opacity:.85;
-}
-
-.hero-title{
-  font-size:68px;
-  font-weight:800;
-  line-height:1.05;
-  margin:15px 0;
-}
-
-.hero-text{
-  font-size:20px;
-  opacity:.92;
-  margin-bottom:25px;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.btn-main{
-  background:#0dcaf0;
-  color:#000;
-  text-decoration:none;
-  padding:14px 28px;
-  border-radius:50px;
-  font-weight:700;
-}
-
-.btn-main:hover{
-  background:#0bb7d8;
-}
-
-.btn-outline-custom{
-  border:2px solid #fff;
-  color:#fff;
-  text-decoration:none;
-  padding:12px 28px;
-  border-radius:50px;
-}
-
-.btn-outline-custom:hover{
-  background:#fff;
-  color:#000;
-}
-
-.nav-arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:10;
-  width:50px;
-  height:50px;
-  border:none;
-  border-radius:50%;
-  background:rgba(255,255,255,0.18);
-  color:#fff;
-  font-size:24px;
-  backdrop-filter:blur(8px);
-  cursor:pointer;
-}
-
-.case-studies .section-title{
-  font-weight: 700;
-  color: #0b1f3a;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-/* الكارد */
-.case-card{
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 20px;
-  padding: 35px 25px;
-  height: 100%;
-  text-align: center;
-  transition: 0.35s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-.case-card{
-  background: #fff;
-  color: #000;
-}
-
-.case-card:hover{
-  transform: translateY(-10px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.12);
-}
-
-/* الأيقونة */
-.case-icon{
-  font-size: 38px;
-  margin-bottom: 15px;
-}
-
-/* النص */
-.case-text{
-  color: #050607;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.prev{ left:20px; }
-.next{ right:20px; }
-
-.progress-line{
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:4px;
-  background:rgba(255,255,255,0.15);
-  z-index:10;
-}
-
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:#0dcaf0;
-}
-
-/* Mobile */
-@media(max-width:768px){
-
-.hero-content{
-left:5%;
-right:5%;
-max-width:100%;
-}
-
-.hero-title{
-font-size:42px;
-}
-
-.hero-text{
-font-size:16px;
-}
-
-.nav-arrow{
-display:none;
-}
-
-}
-
-</style>
+    </style>
 </head>
-
 <body>
 
-  <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-
-    <!-- BRAND -->
-    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-info" href="#">
-      <div style="
-        width:38px;
-        height:38px;
-        background:#0dcaf0;
-        border-radius:8px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:black;
-        font-weight:bold;">
-        A
-      </div>
-
-      <span>
-        AMTC <span class="text-white">Business Services</span> F.Z.C
-      </span>
-    </a>
-
-    <!-- TOGGLER -->
-    <button class="navbar-toggler" type="button"
-      data-bs-toggle="collapse" data-bs-target="#nav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- LINKS -->
-    <div class="collapse navbar-collapse" id="nav">
-      <ul class="navbar-nav ms-auto">
-
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#services">Services</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#projects">Projects</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact</a>
-        </li>
-
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+            <div style="width:45px; height:45px; background:var(--primary); border-radius:12px; display:flex; align-items:center; justify-content:center; color:#000; font-size: 24px;">A</div>
+            <span class="d-none d-sm-inline">AMTC <span style="color: var(--primary)">BUSINESS</span></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact" style="color: var(--primary) !important;">Get Started</a></li>
+            </ul>
+        </div>
     </div>
-
-  </div>
 </nav>
 
-<!-- ===============================
-AMTC PREMIUM HERO SLIDER (FULL)
-Requires Bootstrap + GSAP CDN
-ضعه بدل الـ Hero القديم
-=============================== -->
-
-<!-- HERO SLIDER -->
 <section class="hero-slider">
-
-  <!-- Slide 1 -->
-  <div class="hero-slide active"
-    style="background-image:url('https://images.unsplash.com/photo-1552664730-d307ca884978');">
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-counter">01 / 03</span>
-      <h1 class="hero-title">Smart Business Solutions</h1>
-      <p class="hero-text">
-        Professional consultancy services for modern companies.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#services" class="btn-main">Our Services</a>
-        <a href="#projects" class="btn-outline-custom">Projects</a>
-      </div>
+    <div class="hero-slide active" style="background-image:url('./html/IMAGES/imgHER1.png');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Engineering The <br>Future of Industry</h1>
+            <p class="fs-5 mb-4 opacity-75">Transforming complex challenges into seamless industrial solutions with global expertise.</p>
+            <a href="#services" class="btn-main">Explore Solutions</a>
+        </div>
     </div>
-  </div>
+    
+    <div class="hero-slide" style="background-image:url('./html/IMAGES/imgHER.png');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Precision. <br>Performance. Power.</h1>
+            <p class="fs-5 mb-4 opacity-75">We deliver high-end business services and infrastructure project support.</p>
+            <a href="#projects" class="btn-main">View Portfolio</a>
+        </div>
+    </div>     
 
-  <!-- Slide 2 -->
-  <div class="hero-slide"
-    style="background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd');">
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-counter">02 / 03</span>
-      <h1 class="hero-title">Engineering Excellence</h1>
-      <p class="hero-text">
-        Delivering industrial and infrastructure success.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#projects" class="btn-main">View Projects</a>
-      </div>
+    <div class="position-absolute bottom-0 end-0 p-4 z-3 d-flex gap-2">
+        <button onclick="prevSlide()" class="btn btn-outline-light rounded-circle" style="width:50px; height:50px;">←</button>
+        <button onclick="nextSlide()" class="btn btn-outline-light rounded-circle" style="width:50px; height:50px;">→</button>
     </div>
-  </div>
-
-  <!-- Slide 3 -->
-  <div class="hero-slide"
-    style="background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f');">
-
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-counter">03 / 03</span>
-      <h1 class="hero-title">Growth & Efficiency</h1>
-      <p class="hero-text">
-        Helping businesses scale with confidence.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#contact" class="btn-main">Contact Us</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Controls -->
-  <button class="nav-arrow prev">&#10094;</button>
-  <button class="nav-arrow next">&#10095;</button>
-
-  <!-- Progress -->
-  <div class="progress-line">
-    <div class="progress-fill"></div>
-  </div>
-
 </section>
 
-
-
-<!-- SERVICES -->
 <section id="services" class="section">
-<h2 class="section-title">Our Services</h2>
-
-<div class="container">
-<div class="row g-4">
-
-<div class="col-md-3">
-<div class="card-light text-center">
-<div class="icon">🚚</div>
-<h5>Logistics</h5>
-<p>Supply chain optimization</p>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card-light text-center">
-<div class="icon">📊</div>
-<h5>Feasibility</h5>
-<p>Financial analysis</p>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card-light text-center">
-<div class="icon">🏗️</div>
-<h5>Projects</h5>
-<p>Execution support</p>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card-light text-center">
-<div class="icon">⚙️</div>
-<h5>Engineering</h5>
-<p>Industrial solutions</p>
-</div>
-</div>
-
-</div>
-</div>
-</section>
-
-<!-- PROJECTS GALLERY -->
-<section id="projects" class="section">
-<h2 class="section-title">Project Gallery</h2>
-
-<div class="container">
-<div class="row g-4">
-
-
-<div class="col-md-4">
-<div class="project-img">
-<img src="./html/IMAGES/img6.png">
-</div>
-</div>
-
-<div class="col-md-4">
-<div class="project-img">
-<img src="./html/IMAGES/img3.png">
-</div>
-</div>
-
-
-<div class="col-md-4">
-<div class="project-img">
-<img src="./html/IMAGES/img5.png">
-</div>
-</div>
-
-<div class="col-md-4">
-<div class="project-img">
-<img src="./html/IMAGES/img1.png">
-
-</div>
-</div>
-
-<div class="col-md-4">
-<div class="project-img">
-<img src="./html/IMAGES/img.png">
-</div>
-</div>
-
-<div class="col-md-4">
-<div class="project-img">
-<img src="./html/IMAGES/img4.png">
-</div>
-</div>
-
-</div>
-</div>
-</section>
-
-<!-- VIDEO SECTION -->
-<section class="container py-5 text-center">
-
-  <h2 class="section-title">Company Overview</h2>
-
-  <div class="row g-4 mt-3">
-
-    <!-- Video 1 -->
-    <div class="col-md-6">
-      <div class="video-box">
-        <video controls>
-          <source src="./html/IMAGES/ved4.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-
-    <!-- Video 2 -->
-    <div class="col-md-6">
-      <div class="video-box">
-        <video controls>
-          <source src="./html/IMAGES/ved5.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- CASE STUDIES -->
-<section class="case-studies section">
-  <h2 class="section-title">Case Studies</h2>
-
-  <div class="container">
-    <div class="row g-4">
-
-      <div class="col-md-4">
-        <div class="case-card">
-          <div class="case-icon">📉</div>
-          <div class="case-text">Reduced cost by 28%</div>
+    <div class="container">
+        <h2 class="section-title">Core Expertise</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card-premium">
+                    <div class="icon-box">🚚</div>
+                    <h4>Logistics</h4>
+                    <p class="opacity-50">Global supply chain optimization and advanced industrial transit solutions.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card-premium">
+                    <div class="icon-box">📊</div>
+                    <h4>Feasibility</h4>
+                    <p class="opacity-50">Deep market analysis and financial modeling for mega-scale projects.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card-premium">
+                    <div class="icon-box">🏗️</div>
+                    <h4>Management</h4>
+                    <p class="opacity-50">Strategic execution and oversight for infrastructure and civil works.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card-premium">
+                    <div class="icon-box">⚙️</div>
+                    <h4>Engineering</h4>
+                    <p class="opacity-50">Next-gen industrial engineering and technical consulting services.</p>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="case-card">
-          <div class="case-icon">⛏️</div>
-          <div class="case-text">Mining optimization success</div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="case-card">
-          <div class="case-icon">🏗️</div>
-          <div class="case-text">Faster project delivery</div>
-        </div>
-      </div>
-
     </div>
-  </div>
 </section>
 
+<section id="projects" class="section" style="background: var(--secondary-bg);">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <h2 class="section-title mb-0">Latest Projects</h2>
+            <p class="opacity-50 d-none d-md-block">6 Premium Case Studies</p>
+        </div>
 
-<!-- FOOTER -->
-<footer>
-<div id="contact" class="container">
-<div class="row g-4">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="project-card-v2">
+                    <div id="carouselP1" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active"><img src="./html/IMAGES/img6.png" class="d-block w-100" alt="P1-1"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img1.png" class="d-block w-100" alt="P1-2"></div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselP1" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselP1" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+                    <div class="project-info p-3">
+                        <h5 class="text-info">Industrial Complex A</h5>
+                        <p class="small opacity-50">Infrastructure & Heavy Engineering</p>
+                    </div>
+                </div>
+            </div>
 
-<div class="col-md-4">
-<h5>AMTC</h5>
-<p>Business & Engineering Solutions Company</p>
-</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="project-card-v2">
+                    <div id="carouselP2" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active"><img src="./html/IMAGES/img3.png" class="d-block w-100" alt="P2-1"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img.png" class="d-block w-100" alt="P2-2"></div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselP2" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselP2" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+                    <div class="project-info p-3">
+                        <h5 class="text-info">Supply Chain Hub</h5>
+                        <p class="small opacity-50">Logistics & Distribution Centers</p>
+                    </div>
+                </div>
+            </div>
 
-<div class="col-md-4">
-<h6>Services</h6>
-<p>Logistics / Feasibility / Engineering</p>
-</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="project-card-v2">
+                    <div id="carouselP3" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active"><img src="./html/IMAGES/img5.png" class="d-block w-100" alt="P3-1"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img4.png" class="d-block w-100" alt="P3-2"></div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselP3" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselP3" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+                    <div class="project-info p-3">
+                        <h5 class="text-info">Mining Operations</h5>
+                        <p class="small opacity-50">Resource Extraction Solutions</p>
+                    </div>
+                </div>
+            </div>
 
-<div class="col-md-4">
-<h6>Contact</h6>
-<p>Email: info@Amtcservice.com</p>
-<p>Phone: +96295180041</p>
-<p>Phone: +971508904043</p>
-</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="project-card-v2">
+                    <div id="carouselP4" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active"><img src="./html/IMAGES/img1.png" class="d-block w-100" alt="P4-1"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img6.png" class="d-block w-100" alt="P4-2"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img.png" class="d-block w-100" alt="P4-3"></div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselP4" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselP4" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+                    <div class="project-info p-3">
+                        <h5 class="text-info">Infrastructure Site</h5>
+                        <p class="small opacity-50">Urban Development & Planning</p>
+                    </div>
+                </div>
+            </div>
 
-</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="project-card-v2">
+                    <div id="carouselP7" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active"><img src="./html/IMAGES/img8.png" class="d-block w-100" alt="P7-1"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img9.png" class="d-block w-100" alt="P7-2"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img10.png" class="d-block w-100" alt="P7-3"></div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselP7" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselP7" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+                    <div class="project-info p-3">
+                        <h5 class="text-info">Tech Integration</h5>
+                        <p class="small opacity-50">Digital Transformation for Industry</p>
+                    </div>
+                </div>
+            </div>
 
-<hr>
-<div class="text-center">
-<small>© 2026 AMTC Business Services</small>
-</div>
-</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="project-card-v2">
+                    <div id="carouselP6" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active"><img src="./html/IMAGES/img4.png" class="d-block w-100" alt="P6-1"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img5.png" class="d-block w-100" alt="P6-2"></div>
+                            <div class="carousel-item"><img src="./html/IMAGES/img3.png" class="d-block w-100" alt="P6-3"></div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselP6" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselP6" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+                    <div class="project-info p-3">
+                        <h5 class="text-info">Quality Control</h5>
+                        <p class="small opacity-50">Safety Standards & Compliance</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h2 class="section-title">Corporate Vision</h2>
+                <p class="fs-5 opacity-75 mb-4">We don't just consult; we partner in your growth. AMTC stands at the intersection of traditional engineering excellence and modern digital efficiency.</p>
+                <div class="d-flex gap-4">
+                    <div><h3 class="text-info">28%</h3><p class="small opacity-50">Cost Reduction</p></div>
+                    <div class="border-start ps-4"><h3 class="text-info">150+</h3><p class="small opacity-50">Projects Delivered</p></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="./html/IMAGES/ved7.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <h4 class="mb-4">AMTC Business Services</h4>
+                <p class="opacity-50">Providing world-class business and engineering solutions from F.Z.C centers to the global market.</p>
+            </div>
+            <div class="col-lg-4 ps-lg-5">
+                <h5 class="mb-4 text-white">Contact Expertise</h5>
+                <p class="mb-1 opacity-75">📧 info@amtcservice.com</p>
+                <p class="mb-1 opacity-75">📞 +962 9518 0041 (Jordan)</p>
+                <p class="opacity-75">📞 +971 5089 04043 (UAE)</p>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="mb-4 text-white">Subscribe</h5>
+                <div class="input-group">
+                    <input type="text" class="form-control bg-transparent border-secondary text-white" placeholder="Email Address">
+                    <button class="btn btn-info text-dark fw-bold">Send</button>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5 opacity-10">
+        <div class="text-center opacity-50 small">
+            © 2026 AMTC Business Services F.Z.C. All rights reserved.
+        </div>
+    </div>
 </footer>
 
-<!-- GSAP ANIMATION -->
 <script>
-gsap.registerPlugin(ScrollTrigger);
+    // Slider Logic
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    
+    function showSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+    
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+    
+    setInterval(nextSlide, 6000);
 
-/* HERO */
-gsap.from(".hero-title",{opacity:0,y:80,duration:1});
-gsap.from(".hero-sub",{opacity:0,y:40,delay:0.3});
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
 
-/* SECTIONS */
-gsap.utils.toArray(".section-title").forEach(t=>{
-  gsap.to(t,{
-    scrollTrigger:{trigger:t,start:"top 80%"},
-    opacity:1,y:0,duration:1
-  });
-});
+    gsap.utils.toArray('.card-premium').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            delay: i * 0.1
+        });
+    });
 
-/* CARDS */
-gsap.utils.toArray(".card-light, .card-glass").forEach(c=>{
-  gsap.to(c,{
-    scrollTrigger:{trigger:c,start:"top 85%"},
-    opacity:1,y:0,duration:0.8
-  });
-});
+    gsap.from(".section-title", {
+        scrollTrigger: ".section-title",
+        x: -50,
+        opacity: 0,
+        duration: 1
+    });
+
+    gsap.from(".project-wrapper", {
+        scrollTrigger: "#projects",
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2
+    });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-<script>
-const slides = document.querySelectorAll(".hero-slide");
-const nextBtn = document.querySelector(".next");
-const prevBtn = document.querySelector(".prev");
-const progress = document.querySelector(".progress-fill");
-
-let index = 0;
-let timer;
-
-function animateText(){
-  const active = slides[index];
-
-  gsap.fromTo(active.querySelector(".hero-counter"),
-    {y:20,opacity:0},
-    {y:0,opacity:1,duration:.6});
-
-  gsap.fromTo(active.querySelector(".hero-title"),
-    {y:60,opacity:0},
-    {y:0,opacity:1,duration:1});
-
-  gsap.fromTo(active.querySelector(".hero-text"),
-    {y:30,opacity:0},
-    {y:0,opacity:1,duration:1,delay:.2});
-
-  gsap.fromTo(active.querySelector(".hero-buttons"),
-    {y:20,opacity:0},
-    {y:0,opacity:1,duration:.8,delay:.4});
-}
-
-function showSlide(i){
-  slides.forEach(s => s.classList.remove("active"));
-  slides[i].classList.add("active");
-
-  progress.style.transition = "none";
-  progress.style.width = "0%";
-
-  setTimeout(()=>{
-    progress.style.transition = "5s linear";
-    progress.style.width = "100%";
-  },50);
-
-  animateText();
-}
-
-function nextSlide(){
-  index = (index + 1) % slides.length;
-  showSlide(index);
-  resetAuto();
-}
-
-function prevSlide(){
-  index = (index - 1 + slides.length) % slides.length;
-  showSlide(index);
-  resetAuto();
-}
-
-function autoPlay(){
-  timer = setInterval(()=>{
-    nextSlide();
-  },5000);
-}
-
-function resetAuto(){
-  clearInterval(timer);
-  autoPlay();
-}
-
-nextBtn.onclick = nextSlide;
-prevBtn.onclick = prevSlide;
-
-showSlide(index);
-autoPlay();
-</script>
-
-<script>
-gsap.from(".case-card", {
-  scrollTrigger: {
-    trigger: ".case-card",
-    start: "top 85%"
-  },
-
-});
-</script>
-</script>
 </body>
 </html>
